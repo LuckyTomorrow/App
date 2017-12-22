@@ -24,8 +24,9 @@
     apiready = function() {
         api.parseTapmode();
         var header = $api.byId('aui-header');
-        var hearder_H = $api.offset(header).h;
         $api.fixStatusBar(header);
+
+        var hearder_H = $api.offset(header).h;
 
         api.openFrame({
             name: 'searchFrm',
@@ -34,7 +35,13 @@
                 x: 0,
                 y: hearder_H,
                 w: 'auto',
-                h: api.winHeight - hearder_H
+                h: 'auto'
+            },
+            progress: {
+                type: "page",
+                title: "",
+                text: "",
+                color: "#03a9f4"
             },
             pageParam: {
                 cartId: api.pageParam.cartId
