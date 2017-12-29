@@ -31,10 +31,11 @@
     <section class="aui-content">
 
         <script id="juhsTemp" type="text/x-dot-template">
-            {{ for(var i=0; i < it.length; i++) { }}
-            <div class='aui-col-xs-6 aui-margin-b-10 aui-padded-l-5 aui-padded-r-5'>
+            {{ for(var i=0; i
+            < it.length; i++) { }} <div class='aui-col-xs-6 aui-margin-b-10 aui-padded-l-5 aui-padded-r-5'>
                 <div class="aui-padded-l-0 aui-padded-r-0" style='border:1px solid #D3D3D3;'>
-                    <a href="{{=it[i].diadurl}}">
+                    <a href="#" onclick="turntoGoods(this);">
+                        <span class="diadurl" style="display: none;">{{=it[i].diadurl}}</span>
                         <img src="{{=it[i].pic_url}}" onload='ChangePic(this);' style='height:8rem;width:100%;display:none;' />
                         <img src="../image/loading.png" style='height:8rem;width:100%;display:block' />
                         <div><span class='spanTitle aui-font-size-14 aui-text-default'>&nbsp{{=it[i].title}}</span>
@@ -44,7 +45,7 @@
                         </div>
                     </a>
                 </div>
-              </div>
+                </div>
                 {{ } }}
         </script>
         <div class="aui-row aui-margin-t-10" id="juhs"></div>
@@ -56,15 +57,17 @@
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
     apiready = function() {
-      api.parseTapmode();
+        api.parseTapmode();
+        //加载信息的提示框效果
+        var UILoading = api.require('UILoading');
+        UILoading.flower({}, function(ret) {});
 
-      frameInit();
+        frameInit();
         //下拉刷新设置
         api.setCustomRefreshHeaderInfo({
             bgColor: '#C0C0C0',
-            images: {
-                pull: 'widget://image/refresh/pull.png',
-                transform: [
+            image: {
+                pull: [
                     'widget://image/refresh/pull_end_image_frame_01.png',
                     'widget://image/refresh/pull_end_image_frame_02.png',
                     'widget://image/refresh/pull_end_image_frame_03.png',
@@ -83,19 +86,27 @@
         }, function() {
             //下拉刷新
             frameInit();
-            //刷新成功后取消刷新动画效果
-            api.refreshHeaderLoadDone();
         });
 
         //由于上拉刷新没有提供，需要监听上拉刷新
         api.addEventListener({
             name: 'scrolltobottom'
         }, function(ret, err) {
+            var uploading = api.require('UILoading');
+            uploading.flower({
+                center: {
+                    y: api.winHeight - 100
+                },
+                size: 50
+            }, function(ret) {
+                uptimes = ret.id;
+            });
             loadData();
         });
 
     }
-
+    //上拉刷新序号
+    var uptimes = 0;
     //页数即位一次ajax请求增加的商品数
     var pagecount = 0;
     //data数据
@@ -119,8 +130,13 @@
                     InitGoodsList(intData);
                 }
             } else {
-                pagecount -=1;
+                pagecount -= 1;
             }
+            //上拉数据加载完后结束上拉加载提示框
+            var uiloading = api.require('UILoading');
+            uiloading.closeFlower({
+                id: uptimes
+            });
         });
     }
 
@@ -156,6 +172,11 @@
             } else {
                 alert("暂无商品");
             }
+            //数据加载完后停止下拉刷新效果
+            api.refreshHeaderLoadDone();
+            //首次打开加载完后，停止提示框效果
+            var uiloading = api.require('UILoading');
+            uiloading.closeFlower({});
         });
     }
 
@@ -167,12 +188,25 @@
     }
 
     //在网上图片加载成功后切换图片
-    function ChangePic(node){
-      var nextNode = $api.next(node);
-      $api.css(node,"display:block");
-      $api.css(nextNode,"display:none");
+    function ChangePic(node) {
+        var nextNode = $api.next(node);
+        $api.css(node, "display:block");
+        $api.css(nextNode, "display:none");
     }
 
+    //点击打开优惠券页面
+    function turntoGoods(node) {
+        var urlNode = $api.dom(node, ".diadurl");
+        var url = $api.text(urlNode);
+
+        api.openWin({
+            name: 'goods',
+            url: './goodsWin.html',
+            pageParam: {
+                url: url
+            }
+        });
+    }
 </script>
 
 </html>
