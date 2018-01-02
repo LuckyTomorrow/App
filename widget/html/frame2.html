@@ -108,7 +108,7 @@
     //上拉刷新序号
     var uptimes = 0;
     //页数即位一次ajax请求增加的商品数
-    var pagecount = 0;
+    var pagecount = 1;
     //data数据
     var intData;
 
@@ -169,7 +169,7 @@
                 //如果获取成功，将返回的数据进行js模板排列数据
                 InitGoodsList(ret);
                 intData = ret;
-                pagecount = 0;
+                pagecount = 1;
             } else {
                 alert("暂无商品");
             }

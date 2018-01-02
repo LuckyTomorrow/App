@@ -57,58 +57,58 @@
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
     apiready = function() {
-        api.parseTapmode();
-        //加载信息的提示框效果
-        var UILoading = api.require('UILoading');
-        UILoading.flower({}, function(ret) {});
+            api.parseTapmode();
+            //加载信息的提示框效果
+            var UILoading = api.require('UILoading');
+            UILoading.flower({}, function(ret) {});
 
-        frameInit();
-        //下拉刷新设置
-        api.setCustomRefreshHeaderInfo({
-            bgColor: '#C0C0C0',
-            image: {
-                pull: [
-                    'widget://image/refresh/pull_end_image_frame_01.png',
-                    'widget://image/refresh/pull_end_image_frame_02.png',
-                    'widget://image/refresh/pull_end_image_frame_03.png',
-                    'widget://image/refresh/pull_end_image_frame_04.png',
-                    'widget://image/refresh/pull_end_image_frame_05.png'
-                ],
-                load: [
-                    'widget://image/refresh/refreshing_image_frame_01.png',
-                    'widget://image/refresh/refreshing_image_frame_02.png',
-                    'widget://image/refresh/refreshing_image_frame_03.png',
-                    'widget://image/refresh/refreshing_image_frame_04.png',
-                    'widget://image/refresh/refreshing_image_frame_05.png',
-                    'widget://image/refresh/refreshing_image_frame_06.png'
-                ]
-            }
-        }, function() {
-            //下拉刷新
             frameInit();
-        });
-
-        //由于上拉刷新没有提供，需要监听上拉刷新
-        api.addEventListener({
-            name: 'scrolltobottom'
-        }, function(ret, err) {
-            var uploading = api.require('UILoading');
-            uploading.flower({
-                center: {
-                    y: api.winHeight - 100
-                },
-                size: 50
-            }, function(ret) {
-                uptimes = ret.id;
+            //下拉刷新设置
+            api.setCustomRefreshHeaderInfo({
+                bgColor: '#C0C0C0',
+                image: {
+                    pull: [
+                        'widget://image/refresh/pull_end_image_frame_01.png',
+                        'widget://image/refresh/pull_end_image_frame_02.png',
+                        'widget://image/refresh/pull_end_image_frame_03.png',
+                        'widget://image/refresh/pull_end_image_frame_04.png',
+                        'widget://image/refresh/pull_end_image_frame_05.png'
+                    ],
+                    load: [
+                        'widget://image/refresh/refreshing_image_frame_01.png',
+                        'widget://image/refresh/refreshing_image_frame_02.png',
+                        'widget://image/refresh/refreshing_image_frame_03.png',
+                        'widget://image/refresh/refreshing_image_frame_04.png',
+                        'widget://image/refresh/refreshing_image_frame_05.png',
+                        'widget://image/refresh/refreshing_image_frame_06.png'
+                    ]
+                }
+            }, function() {
+                //下拉刷新
+                frameInit();
             });
-            loadData();
-        });
 
-    }
-    //上拉刷新序号
+            //由于上拉刷新没有提供，需要监听上拉刷新
+            api.addEventListener({
+                name: 'scrolltobottom'
+            }, function(ret, err) {
+                var uploading = api.require('UILoading');
+                uploading.flower({
+                    center: {
+                        y: api.winHeight - 100
+                    },
+                    size: 50
+                }, function(ret) {
+                    uptimes = ret.id;
+                });
+                loadData();
+            });
+
+        }
+        //上拉刷新序号
     var uptimes = 0;
     //页数即位一次ajax请求增加的商品数
-    var pagecount = 0;
+    var pagecount = 1;
     //data数据
     var intData;
     //上拉刷新，ajax请求新的数据
@@ -125,11 +125,12 @@
         }, function(ret, err) {
             if (JSON.stringify(ret) !== "[]") {
                 //如果获取成功，将返回的数据进行js模板排列数据
-                InitGoodsList(ret);
-                intData = ret;
-                pagecount = 0;
+                if (intData) {
+                    intData = mergerJsonArr(intData, ret);
+                    InitGoodsList(intData);
+                }
             } else {
-                alert("暂无商品");
+                pagecount -= 1;
             }
             //上拉数据加载完后结束上拉加载提示框
             var uiloading = api.require('UILoading');
@@ -167,9 +168,9 @@
                 //如果获取成功，将返回的数据进行js模板排列数据
                 InitGoodsList(ret);
                 intData = ret;
-                pagecount = 0;
+                pagecount = 1;
             } else {
-                pagecount -= 1;
+                alert("暂无商品");
             }
             //数据加载完后停止下拉刷新效果
             api.refreshHeaderLoadDone();
