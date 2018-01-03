@@ -44,6 +44,10 @@
         <div class="aui-row aui-margin-t-10" id="cart"></div>
     </section>
 
+    <div class="aui-tips aui-margin-b-10" id="uptitle" style="text-align:center;dispaly:none;" >
+        加载中...
+    </div>
+
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
@@ -88,15 +92,6 @@
         api.addEventListener({
             name: 'scrolltobottom'
         }, function(ret, err) {
-            var uploading = api.require('UILoading');
-            uploading.flower({
-                center: {
-                    y: api.winHeight - 100
-                },
-                size: 50
-            }, function(ret) {
-                uptimes = ret.id;
-            });
             loadData();
         });
 
@@ -108,11 +103,12 @@
 
     }
 
-    //上拉刷新序号
-    var uptimes = 0;
     var pagecount = 1;
     //上拉刷新，ajax请求新的数据
     function loadData() {
+        var node = $api.byId("uptitle");
+        $api.css(node, "display:block");
+
         pagecount += 1;
         api.ajax({
             url: 'http://www.zaixianclock.com/App/Index/keyword',
@@ -132,12 +128,8 @@
                 }
             } else {
                 pagecount -= 1;
+                $api.text(node, "---到底啦---");
             }
-            //上拉数据加载完后结束上拉加载提示框
-            var uiloading = api.require('UILoading');
-            uiloading.closeFlower({
-                id: uptimes
-            });
         });
 
     }
@@ -156,6 +148,10 @@
 
     //apiready后对聚划算frame进行初始化数据的ajax获取
     function frameInit() {
+        var node = $api.byId("uptitle");
+        $api.css(node, "display:none");
+        $api.text(node, "正在加载...");
+
         api.ajax({
             url: 'http://www.zaixianclock.com/App/Index/keyword',
             method: 'post',
