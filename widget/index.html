@@ -132,23 +132,24 @@
 
     //分享方式
     function openSharebox() {
-        api.openFrame({
-            name: 'share',
-            url: './html/sharebox.html',
-            rect: {
-                x: 0,
-                y: header_h,
-                w: 'auto',
-                h: body_h * 0.25
-            },
-            pageParam: {
-                name: 'test'
-            },
-            bounces: true,
-            bgColor: 'rgba(0,0,0,0)',
-            vScrollBarEnabled: true,
-            hScrollBarEnabled: true
-        });
+        
+          api.openFrame({
+              name: 'share',
+              url: './html/sharebox.html',
+              rect: {
+                  x: 0,
+                  y: header_h,
+                  w: 'auto',
+                  h: body_h * 0.25
+              },
+              pageParam: {
+                  name: 'test'
+              },
+              bounces: true,
+              bgColor: 'rgba(0,0,0,0)',
+              vScrollBarEnabled: true,
+              hScrollBarEnabled: true
+          });
 
     }
 
