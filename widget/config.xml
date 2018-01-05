@@ -1,10 +1,10 @@
  <widget id="A6068372233280"  version="0.0.1">
-    <name>HelloApp</name>
+    <name>惠购券</name>
     <description>
-        Example
+        惠购券--您身边的优惠
     </description>
-    <author email="developer@apicloud.com" href="http://www.apicloud.com">
-        Developer
+    <author email="990885394@qq.com" href="http://www.zaixianclock.com">
+        Ganlt
     </author>
     <content src="index.html" />
     <access origin="*" />
