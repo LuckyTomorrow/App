@@ -13,8 +13,8 @@
 <body>
     <!--顶部搜索框-->
     <div class="aui-bar aui-bar-nav " style="background-color: #EC425B" id='header'>
-        <a class="aui-pull-left aui-btn">
-            <span class="aui-iconfont aui-icon-left"></span>
+        <a class="aui-pull-left aui-btn" tapmode onclick="openScanner();">
+            <span class="aui-iconfont aui-icon-scanner"></span>
         </a>
         <div class="aui-title" style="left:2rem; right: 2rem;">
             <div class="aui-searchbar" style="background-color: #EC425B">
@@ -132,24 +132,24 @@
 
     //分享方式
     function openSharebox() {
-        
-          api.openFrame({
-              name: 'share',
-              url: './html/sharebox.html',
-              rect: {
-                  x: 0,
-                  y: header_h,
-                  w: 'auto',
-                  h: body_h * 0.25
-              },
-              pageParam: {
-                  name: 'test'
-              },
-              bounces: true,
-              bgColor: 'rgba(0,0,0,0)',
-              vScrollBarEnabled: true,
-              hScrollBarEnabled: true
-          });
+
+        api.openFrame({
+            name: 'share',
+            url: './html/sharebox.html',
+            rect: {
+                x: 0,
+                y: header_h,
+                w: 'auto',
+                h: body_h * 0.25
+            },
+            pageParam: {
+                name: 'test'
+            },
+            bounces: true,
+            bgColor: 'rgba(0,0,0,0)',
+            vScrollBarEnabled: true,
+            hScrollBarEnabled: true
+        });
 
     }
 
@@ -165,6 +165,19 @@
             }
         });
         return false;
+    }
+
+    //打开扫描功能
+    function openScanner() {
+        var FNScanner = api.require('FNScanner');
+        FNScanner.openScanner({
+            autorotation: true
+        }, function(ret, err) {
+            var browser = api.require('webBrowser');
+            browser.open({
+                url: ret.content
+            });
+        });
     }
 </script>
 
