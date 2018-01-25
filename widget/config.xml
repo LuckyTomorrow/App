@@ -1,30 +1,1 @@
- <widget id="A6068372233280"  version="0.0.1">
-    <name>惠购券</name>
-    <description>
-        惠购券--您身边的优惠
-    </description>
-    <author email="990885394@qq.com" href="http://www.zaixianclock.com">
-        Ganlt
-    </author>
-    <content src="index.html" />
-    <access origin="*" />
-    <preference name="pageBounce" value="false"/>
-	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
-	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
-	<preference name="hScrollBarEnabled" value="true"/>
-	<preference name="vScrollBarEnabled" value="true"/>
-	<preference name="autoLaunch" value="true"/>
-	<preference name="fullScreen" value="false"/>
-	<preference name="autoUpdate" value="true" />
-	<preference name="smartUpdate" value="false" />
-	<preference name="debug" value="true"/>
-	<preference name="statusBarAppearance" value="true"/>
-	<permission name="readPhoneState" />
-	<permission name="camera" />
-	<permission name="record" />
-	<permission name="location" />
-	<permission name="fileSystem" />
-	<permission name="internet" />
-	<permission name="bootCompleted" />
-	<permission name="hardware" />  <preference name="customRefreshHeader" value="UIPullRefreshFlash"/>  <feature name="qq">    <param name="urlScheme" value="tencent1106581817" />    <param name="apiKey" value="1106581817" /> </feature>
-</widget>
+ <widget id="A6068372233280"  version="0.0.1">    <name>惠购券</name>    <description>        惠购券--您身边的优惠    </description>    <author email="990885394@qq.com" href="http://www.zaixianclock.com">        Ganlt    </author>    <content src="index.html" />    <access origin="*" />    <preference name="pageBounce" value="false"/>	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>	<preference name="hScrollBarEnabled" value="true"/>	<preference name="vScrollBarEnabled" value="true"/>	<preference name="autoLaunch" value="true"/>	<preference name="fullScreen" value="false"/>	<preference name="autoUpdate" value="true" />	<preference name="smartUpdate" value="false" />	<preference name="debug" value="true"/>	<preference name="statusBarAppearance" value="true"/>	<permission name="readPhoneState" />	<permission name="camera" />	<permission name="record" />	<permission name="location" />	<permission name="fileSystem" />	<permission name="internet" />	<permission name="bootCompleted" />	<permission name="hardware" />  <preference name="customRefreshHeader" value="UIPullRefreshFlash"/>  <feature name="qq">    <param name="urlScheme" value="tencent1106581817" />    <param name="apiKey" value="1106581817" /> </feature> <feature name="wx">    <param name="urlScheme" value="wxc90fec6c3f896fb0"/>    <param name="apiKey" value="wxc90fec6c3f896fb0"/>    <param name="apiSecret" value="f06fb26398c5cdc4a7e3b06024a76f95"/>  </feature></widget>
